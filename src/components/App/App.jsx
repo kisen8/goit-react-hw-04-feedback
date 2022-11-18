@@ -11,8 +11,8 @@ export const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const [countTotal, setCountTotal] = useState(null);
-  const [countPercentage, setCountPercentage] = useState(null);
+  const [countTotal, setCountTotal] = useState(0);
+  const [countPercentage, setCountPercentage] = useState(0);
 
   const handleFeedback = e => {
     const name = e.currentTarget.name;
@@ -30,14 +30,10 @@ export const App = () => {
   };
 
   useEffect(() => {
-    setCountTotal(good + neutral + bad);
+    const allState = good + neutral + bad;
+    setCountTotal(allState);
+    setCountPercentage(Math.round((100 / allState) * good) || 0);
   }, [good, neutral, bad]);
-
-  useEffect(() => {
-    const percentage = +((good * 100) / countTotal).toFixed();
-    setCountPercentage(countTotal ? percentage : 0);
-  }, [countTotal]);
-
   return (
     <Box>
       <Section title="Please leave feedback">
